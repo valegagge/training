@@ -1,0 +1,23 @@
+1) ls docker image
+2) launch a cotainer with ubuntu
+3) create a docker file
+4) build docker file
+5) run a container
+6) install a vim + create a file
+7) list the container. Show it is in running state
+8) exit from the container
+9) list the container. Show it is in running state
+10) create an image starting from the container
+11) push the image and show dockerhub (Registry)
+12) create a container that shares file with host: --mount type=bind,source=${HOME}/my_projects/dockerOverviewTeam5,target=/root/dockerOverviewTeam5
+13) use docker-compose -f deployment_ex.yml up
+14) show the docker file to launch the container we used before
+15) add 
+  serv_app:
+    <<: *mydeploy
+    command: python3 myapp.py
+
+
+
+
+

@@ -1,0 +1,20 @@
+version: "3.7"
+
+x-mydeploy: &mydeploy
+  image: prova:uno
+  environment:
+    - MY_VAR=10
+  volumes:
+          - "${HOME}/my_projects/dockerOverviewTeam5:/root/dockerOverviewTeam5"
+  working_dir: /root/dockerOverviewTeam5
+ 
+services:
+  serv_app:
+    <<: *mydeploy
+    command: python3 myapp.py
+
+  serv_sleep:
+    <<: *mydeploy
+    command: sleep infinity
+
+ 
