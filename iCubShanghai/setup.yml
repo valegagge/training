@@ -1,0 +1,48 @@
+version: "3.7"
+
+x-improvedJointsetup: &improvedJointsetup
+  image: icubteamcode/superbuild-icubhead:master-stable_sources
+  environment:
+    - YARP_FORWARD_LOG_ENABLE=1
+    - DISPLAY=${DISPLAY}
+    - QT_X11_NO_MITSHM=1
+    - XAUTHORITY=/root/.Xauthority
+  volumes:
+    - "${HOME}/.config/yarp:/root/.config/yarp"
+    - "${HOME}/workspace:/root/workspace"
+    - "/tmp/.X11-unix:/tmp/.X11-unix"
+    - "${XAUTHORITY}:/root/.Xauthority"
+  working_dir: /root/workspace/robots-configuration/experimentalSetups/5-improvedJoint
+  #ports:
+  #  - "10000:10000"
+  network_mode: "host"
+  #privileged: true
+
+
+
+services:
+  yserver:
+    <<: *improvedJointsetup
+    command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then yarpserver --read; fi"
+    #command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then sleep infinity; fi"
+
+  
+  yrobotinterface:
+    <<: *improvedJointsetup
+    restart: on-failure
+    command: yarprobotinterface
+
+  ylogger:
+    <<: *improvedJointsetup
+    restart: on-failure
+    command: yarplogger --start
+  
+  ymotorgui:
+    <<: *improvedJointsetup
+    restart: on-failure
+    command: yarpmotorgui --calib
+
+
+
+
+    #command: sh -c "if [ -f "/root/.config/yarp/yarp_namespace.conf" ]; then yarp wait $$(echo $$(cat /root/.config/yarp/yarp_namespace.conf)); else yarp wait /root; fi; cd /root/FIVE_WORKSPACE/setupApps/motor-brake/; python3 motorBrakeManager.py"
