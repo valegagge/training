@@ -103,14 +103,14 @@ BigObject createObject()
 int main()
 {
     BigObject obj1 = createObject();
-    //1) check if the RVO optimization has been applayed.
+    //1) check if the RVO optimization has been applied.
     if(numMovedObj == 0)
     {
-        std::cout << "RVO optimization has been applayed!!!!"<< std::endl<< std::endl;
+        std::cout << "RVO optimization has been applied!!!!"<< std::endl<< std::endl;
     }
     else
     {
-        std::cout << "NO RVO optimization has been applayed!!!!"<< std::endl<< std::endl;
+        std::cout << "NO RVO optimization has been applied!!!!"<< std::endl<< std::endl;
     }
    
     ContainerOfObject container;
