@@ -168,7 +168,6 @@ int main()
      BigObject obj4 = BigObject(BigObject());
 
 
-    std::cout << "SECOND: number of copies = " << numCopiesMade << ". The container has " << container.size() << " elements" << std::endl;
 
     #warning question 7: put here the code
     //QUESTION 7: add 10 BigObject to the container in order to avoid copies.
@@ -177,5 +176,5 @@ int main()
     {
         container.addObject(BigObject());
     }
-    std::cout << "THIRD: number of copies = " << numCopiesMade << ". The container has " << container.size() << " elements" << std::endl;
+
 }
