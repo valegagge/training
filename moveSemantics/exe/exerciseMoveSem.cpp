@@ -126,7 +126,7 @@ int main()
 
     BigObject obj2= BigObject();
 
-    //#warning question 6: put here the code
+    #warning question 6: put here the code
     //QUESTION 6: create obj3 from a temporary BigObject. Here are possible 2 solutions. Can you find both??    
 
 
