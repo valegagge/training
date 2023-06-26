@@ -106,35 +106,31 @@ int main()
     //1) check if the RVO optimization has been applayed.
     if(numMovedObj == 0)
     {
-        std::cout << "RVO optimization has been applayed!!!!"<< std::endl;
+        std::cout << "RVO optimization has been applayed!!!!"<< std::endl<< std::endl;
     }
     else
     {
-        std::cout << "NO RVO optimization has been applayed!!!!"<< std::endl;
+        std::cout << "NO RVO optimization has been applayed!!!!"<< std::endl<< std::endl;
     }
    
     ContainerOfObject container;
-    std::cout << "FIRST: number of copies = " << numCopiesMade << ". The container has " << container.size() << " elements" << std::endl;
+    std::cout << "INIT: number of copies = " << numCopiesMade << ". Number of moves = "<< numMovedObj << ".  The container has " << container.size() << " elements." << std::endl<< std::endl;
 
     container.addObject(obj1);
+    std::cout << "FIRST: number of copies = " << numCopiesMade << ". Number of moves = "<< numMovedObj << ".  The container has " << container.size() << " elements." << std::endl<< std::endl;
 
     container.addObject(std::move(obj1));
+    std::cout << "SECOND: number of copies = " << numCopiesMade << ". Number of moves = "<< numMovedObj << ".  The container has " << container.size() << " elements." << std::endl<< std::endl;
 
     obj1.setNewValueAtIndex(2, 33);
 
     BigObject obj2= BigObject();
 
     //#warning question 6: put here the code
-    //QUESTION 6: create obj3 from a temporary BigObject. Here are possible 2 solutions? Can you find both??    
+    //QUESTION 6: create obj3 from a temporary BigObject. Here are possible 2 solutions. Can you find both??    
 
-    std::cout << "SECOND: number of copies = " << numCopiesMade << ". The container has " << container.size() << " elements" << std::endl;
 
     #warning question 7: put here the code
     //QUESTION 7: add 10 BigObject to the container in order to avoid copies.
-    for(int i=0; i<10; i++)
-    {
-        container.addObject(BigObject());
-    }
 
-    std::cout << "THIRD: number of copies = " << numCopiesMade << ". The container has " << container.size() << " elements" << std::endl;
 }
