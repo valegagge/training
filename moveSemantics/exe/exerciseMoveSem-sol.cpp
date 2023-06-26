@@ -56,24 +56,42 @@ public:
     }
 
 //insert here the move constructor
-   BigObject(BigObject &&other) noexcept
+/*       BigObject(BigObject &&other) noexcept
        :data{other.data}
    {
        other.data = nullptr;
- //      std::cout << "BigObject move constructor" << std::endl;
+       std::cout << "BigObject move constructor" << std::endl;
+       numMovedObj++;
+   }*/
+   
+    BigObject(BigObject &&other) noexcept
+   {
+       data = other.data;
+       other.data = nullptr;
+       std::cout << "BigObject move constructor" << std::endl;
        numMovedObj++;
    }
 
-   //insert here the move-assignment object
-
-   BigObject& operator=(BigObject &&other) noexcept
+ //insert here the move-assignment object
+/*    BigObject& operator=(BigObject &&other) noexcept
    {
-//       std::cout << "BigObject move-assignment operator" << std::endl;
+       std::cout << "BigObject move-assignment operator" << std::endl;
        BigObject moved(std::move(other));
        using std::swap;
        swap(moved.data, data);
        return *this;
+       numMovedObj++;
+   }*/
+   
+    BigObject& operator=(BigObject &&other) noexcept
+   {
+       data = other.data;
+       other.data = nullptr;
+       numMovedObj++;
+       return *this;
+      
    }
+
 
    void setNewValueAtIndex(int index, int newvalue)
    {
