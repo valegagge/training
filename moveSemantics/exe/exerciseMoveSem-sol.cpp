@@ -136,23 +136,25 @@ BigObject createObject()
 
 int main()
 {
-    BigObject obj1 = createObject();
-    //1) check if the RVO optimization has been applayed.
+     BigObject obj1 = createObject();
+    //1) check if the RVO optimization has been applied.
     if(numMovedObj == 0)
     {
-        std::cout << "RVO optimization has been applaied!!!!"<< std::endl;
+        std::cout << "RVO optimization has been applied!!!!"<< std::endl<< std::endl;
     }
     else
     {
-        std::cout << "NO RVO optimization has been applaied!!!!"<< std::endl;
+        std::cout << "NO RVO optimization has been applied!!!!"<< std::endl << std::endl;
     }
    
     ContainerOfObject container;
-    std::cout << "FIRST: number of copies = " << numCopiesMade << ". The container has " << container.size() << " elements" << std::endl;
+    std::cout << "INIT: number of copies = " << numCopiesMade << ". Number of moves = "<< numMovedObj << ".  The container has " << container.size() << " elements." << std::endl<< std::endl;
 
     container.addObject(obj1);
+    std::cout << "FIRST: number of copies = " << numCopiesMade << ". Number of moves = "<< numMovedObj << ".  The container has " << container.size() << " elements." << std::endl<< std::endl;
 
     container.addObject(std::move(obj1));
+    std::cout << "SECOND: number of copies = " << numCopiesMade << ". Number of moves = "<< numMovedObj << ".  The container has " << container.size() << " elements." << std::endl<< std::endl;
 
     BigObject obj2= BigObject();
 
@@ -161,7 +163,7 @@ int main()
 
 
     #warning question 6: put here the code
-    //QUESTION 6: create obj3 from a temporary BigObject. Here are possible 2 solutions? Can you find both??
+    //QUESTION 6: create obj3 from a temporary BigObject. Here are possible 2 solutions. Can you find both??
      BigObject obj3 = BigObject(std::move(obj2));
      BigObject obj4 = BigObject(BigObject());
 
