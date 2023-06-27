@@ -10,6 +10,8 @@ void accumulate(std::vector<int>::iterator first,
                 std::promise<int> accumulate_promise)
 {
     int sum = std::accumulate(first, last, 0);
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::cout << "I'm in accumulate... I'm about to set the result in promise.." <<std::endl;
     accumulate_promise.set_value(sum);  // Notify future
 }
  
@@ -20,42 +22,42 @@ void do_work(std::promise<void> barrier)
 }
 
 
-void mycalc(std::future<int> f)
+void square(std::future<int> f)
 {
-    std::cout << "I'm in mycalc... i'm doining something.." <<std::endl;
+    std::cout << "I'm in square... I'm wainting the input.." <<std::endl;
     int x = f.get();
-    std::cout << "result in mycalc is " << x*x << std::endl;
+    std::cout << "result in Square is " << x*x << std::endl;
 }
  
 int main()
 {
-    // Demonstrate using promise<int> to transmit a result between threads.
+     std::cout << "Main is starting" << std::endl;
+    // ---- 1) Demonstrate using promise<int> to get the result from a thread.
     std::vector<int> numbers = { 1, 2, 3, 4, 5, 6 };
     std::promise<int> accumulate_promise;
     std::future<int> accumulate_future = accumulate_promise.get_future();
     std::thread work_thread(accumulate, numbers.begin(), numbers.end(),
                             std::move(accumulate_promise));
-                            
-                            
-    std::promise<int> mypromise;
-    std::future<int> myfut = mypromise.get_future();
-    std::thread mythread (mycalc, std::move(myfut));
+
+
+    // ---- 2) Demonstrate using promise<int> to pass a value to the thread in the future.
+    std::promise<int> square_promise;
+    std::future<int> square_future = square_promise.get_future();
+    std::thread square_thread (square, std::move(square_future));
+
+
+    //future::get() will wait until the future has a valid result and retrieves it.
+    //Calling wait() before get() is not needed
+    std::cout << "main: I'm waiting the accumulate result .... " <<std::endl;
+    auto accumulate_res =  accumulate_future.get();
+    std::cout << "main: accumulate result is " << accumulate_res <<std::endl <<std::endl;
  
-    // future::get() will wait until the future has a valid result and retrieves it.
-    // Calling wait() before get() is not needed
-    //accumulate_future.wait();  // wait for result
-    std::cout << "result=" << accumulate_future.get() << '\n';
     work_thread.join();  // wait for thread completion
     
-    std::cout << "i'm going to call my calc" << std::endl;
-    mypromise.set_value(7);
+    std::cout << "main: I'm going to pass a value (7) to square_thread" << std::endl;
+    square_promise.set_value(7);
     
-    mythread.join();
+    square_thread.join();
     
-    // Demonstrate using promise<void> to signal state between threads.
-    std::promise<void> barrier;
-    std::future<void> barrier_future = barrier.get_future();
-    std::thread new_work_thread(do_work, std::move(barrier));
-    barrier_future.wait();
-    new_work_thread.join();
+    std::cout << "main is ending" << std::endl;
 }
