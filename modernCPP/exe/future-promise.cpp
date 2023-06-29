@@ -10,7 +10,7 @@ void accumulate(std::vector<int>::iterator first,
                 std::promise<int> accumulate_promise)
 {
     int sum = std::accumulate(first, last, 0);
-    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::this_thread::sleep_for(std::chrono::seconds(3)); //simulate to do some work
     std::cout << "I'm in accumulate... I'm about to set the result in promise.." <<std::endl;
     accumulate_promise.set_value(sum);  // Notify future
 }
@@ -61,3 +61,5 @@ int main()
     
     std::cout << "main is ending" << std::endl;
 }
+
+//g++ -std=c++11 -pthread -o future-promise future-promise.cpp
